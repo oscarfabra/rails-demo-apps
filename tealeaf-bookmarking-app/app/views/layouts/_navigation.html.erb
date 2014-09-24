@@ -1,0 +1,15 @@
+<div class="navigation">
+	<%= link_to "heavensy", posts_path %>
+	  |
+	<% if logged_in? %>
+	  Bienvenido, <%= current_user.username %>
+	  |
+	  <%= link_to "Mi Perfil", user_profile_path(current_user_profile) %>
+	  |
+	  <%= link_to "Salir", logout_path %>
+	<% else %>
+	  <%= link_to "Registrarme", register_path %>
+	  |
+	  <%= link_to "Ingresar", login_path %>
+	<% end %>
+</div>

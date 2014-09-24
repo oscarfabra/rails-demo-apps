@@ -1,0 +1,65 @@
+<%= form_for(@post) do |f| %>
+
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2>&iexcl;Ups! Revisa que todo est&eacute; bien.</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <br/>
+  
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  
+  <div class="actions">
+    <%= f.submit "Crear" %>
+  </div>
+  
+  
+<% end %>
+
+<!--
+<%= form_tag '/posts' do %>
+  
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= label_tag :url %><br />
+    <%= text_field_tag "post[url]" %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :title %><br />
+    <%= text_field_tag "post[title]" %>
+  </div>
+  
+  <div class="actions">
+    <%= submit_tag "Crear" %>
+  </div>
+  
+<% end %>
+-->

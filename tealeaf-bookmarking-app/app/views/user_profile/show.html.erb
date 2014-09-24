@@ -1,0 +1,84 @@
+<h2>Perfil de <%= @user_profile.user.username %></h2>
+
+<% if logged_in? && current_user_profile.id == @user_profile.id %>
+  <%= form_for @user_profile, :url => { :action => "edit" }, :html => { :method => "get" } do |f| %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <div class="actions">
+      <%= f.submit "Editar perfil" %>
+    </div>
+  <% end %>
+<% end %>
+
+<i><%= link_to "Regresar", posts_path %></i>
+<br/>
+<br/>
+
+<div class="field">
+  <%= label_tag "Nombre completo" %>
+  <%= @user_profile.full_name %>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Fecha de registro" %>
+  <%= @user_profile.created_at %>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Usuario de Twitter" %>
+  <%= @user_profile.twitter_handle %>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Ultimos 10 links publicados" %>
+  <ul>
+  <% @user_profile.recent_posts(10).each do |post| %>
+    <li>
+      (<%= post.vote_number %>)
+      <%= display_url_link(post) %>
+      (<%= link_to pluralize(post.comments.count, 'comentario', 'comentarios'), post_path(post) %>)
+    </li>
+  <% end %>
+  </ul>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Ultimos 10 comentarios hechos" %>
+   <ul>
+  <% @user_profile.recent_comments(10).each do |comment| %>
+    <li>
+      [<%= display_url_link(comment.post) %>]
+      <%= comment.content %>      
+    </li>
+  <% end %>
+  </ul>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Ultimos 10 votos realizados" %>
+   <ul>
+  <% @user_profile.recent_votes(10).each do |vote| %>
+    <li>
+      [<%= display_url_link(vote.post) %>]
+      <%= vote.direction %>      
+    </li>
+  <% end %>
+  </ul>
+</div>
+<br/>
+
+<div class="field">
+  <%= label_tag "Ultimos 10 tweets publicados" %>
+   <ul>
+  <% @user_profile.recent_tweets(10).each do |tweet| %>
+    <li>
+      <%= tweet.text %>      
+    </li>
+  <% end %>
+  </ul>
+</div>
+<br/>

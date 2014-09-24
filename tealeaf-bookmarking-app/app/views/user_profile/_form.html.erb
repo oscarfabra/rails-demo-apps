@@ -1,0 +1,33 @@
+<%= form_for @user_profile, :url => { :action => "update" }, :html => { :method => "put" } do |f| %>
+
+  <% if @user_profile.errors.any? %>
+    <div id="error_explanation">
+      <h2>&iexcl;Ups! Revisa que todo est&eacute; bien.</h2>
+
+      <ul>
+      <% @user_profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label "Nombre completo" %>
+    <%= f.text_field :full_name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label "Cuenta de twitter" %>
+    <%= f.text_field :twitter_handle %>
+  </div>
+  <br/>
+  
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  
+  <div class="actions">
+    <%= f.submit "Realizar cambios" %>
+  </div>
+  
+  
+<% end %>

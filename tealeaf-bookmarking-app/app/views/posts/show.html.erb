@@ -1,0 +1,56 @@
+<h4>
+  <%= link_to @post.title, @post.url %> <i>por <%= @post.created_by %></i>
+</h4>
+<p>
+    <i><%= link_to "Regresar", posts_path %></i>
+</p>
+<p>
+  <% if logged_in? %>
+    <h3>
+      <%= pluralize(@post.comments.count, 'comentario', 'comentarios') %>:
+    </h3>
+  
+    <%= form_for [@post, @comment] do |f| %>
+  
+      <% if @post.errors.any? %>
+        <div id="error_explanation">
+          <h2>Hubo estos errores:</h2>
+  
+          <ul>
+          <% @post.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <div class="field">
+        <%= f.text_area :content, rows: 5 %>
+     </div>
+    
+     <%= f.hidden_field :user_id, value: current_user.id %>
+  
+     <div class="actions">
+       <%= f.submit "Hacer comentario" %>
+     </div>
+  
+    <% end %>
+  
+  <% else %>
+    
+    <h5><%= link_to 'Ingresa', login_path %> para que puedas hacer comentarios!</h5>
+    
+  <% end %>
+  
+  <ul>
+    <% @post.comments.each do |comment| %>
+      <% if comment.content %>
+        <li>
+          <i><%= link_to comment.created_by, user_profile_path(comment.created_by_profile) %> dice: </i>
+          <%= comment.content %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+</p>

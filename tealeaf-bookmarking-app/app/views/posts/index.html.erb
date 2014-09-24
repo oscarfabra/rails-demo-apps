@@ -1,0 +1,39 @@
+<h1>heavensy</h1>
+
+<div>
+  <% if logged_in? %>
+    <h4><%= link_to 'Publicar link', new_post_path %></h4>
+  <% else %>
+    <h5><%= link_to 'Ingresa', login_path %> para que puedas publicar links y votar por tus favoritos!</h5>
+  <% end %>
+</div>
+<%= paginate @posts %>
+<ul>
+<% @posts.each do |post| %>
+  <li>
+    (<%= post.vote_number %>)
+    <%= display_url_link(post) %>
+    (<%= link_to pluralize(post.comments.count, 'comentario', 'comentarios'), post_path(post) %>)
+    <i>por <%= link_to post.created_by, user_profile_path(post.created_by_profile) %></i>
+    
+    <% if logged_in? %>
+      
+      <%= form_for [post, post.votes.build] do |f| %>
+        <%= f.hidden_field :direction, value: "up" %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.submit "Votar Arriba" %>
+      <% end %>
+
+      <% if (post.vote_number > 0) %>
+        <%= form_for [post, post.votes.build] do |f| %>
+          <%= f.hidden_field :direction, value: "down" %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.submit "Votar Abajo" %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+
+  </li>
+<% end %>
+</ul>

@@ -1,0 +1,7 @@
+<h2>Editando perfil del usuario <%= current_user.username %></h2>
+<br/>
+
+<%= render 'form' %>
+
+<%= link_to 'Ver perfil', user_profile_path(current_user_profile) %>
+
