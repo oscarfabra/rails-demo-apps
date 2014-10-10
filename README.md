@@ -1,4 +1,4 @@
-ruby-demo-apps
-==============
+rails-demo-apps
+===============
 
-Ruby on Rails Demo Apps
+Ruby on Rails Demo Apps.
